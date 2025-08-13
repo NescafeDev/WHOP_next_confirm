@@ -20,12 +20,29 @@ export default function Home() {
 
   useEffect(() => {
     async function purchase() {
+      const param = new URLSearchParams(window.location.search);
+      
+      const iapParam = param.get("iap");
+
+      if (!iapParam) {
+        console.error("No 'iap' parameter found in URL");
+        return;
+      }
+
+      console.log(btoa(iapParam));
+
+      const data = JSON.parse(atob(iapParam));
+
       setLoading(true);
       try {
         const res = await iframeSdk.inAppPurchase({
-          id: "ch_XdCLdy0rBpuMDqL",
-          planId: "plan_P3agDRh4HNFvd"
+          id: data.id,
+          planId: data.planId
         })
+
+        console.log("data:", data);
+
+        console.log(res);
 
         if (res.status === "ok") {
           console.log(res.data);
