@@ -35,12 +35,12 @@ export default function Home() {
 
       setLoading(true);
       try {
+        console.log("data:", data);
+
         const res = await iframeSdk.inAppPurchase({
           id: data.id,
           planId: data.planId
         })
-
-        console.log("data:", data);
 
         console.log(res);
 
